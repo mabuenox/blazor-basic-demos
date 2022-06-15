@@ -1,0 +1,42 @@
+﻿@page "/books"
+
+<h1>Books</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th><a href="javascript:;" @onclick='()=>SortBy("id")'>Id</a></th>
+            <th><a href="javascript:;" @onclick='()=>SortBy("title")'>Title</a></th>
+            <th><a href="javascript:;" @onclick='()=>SortBy("author")'>Author</a></th>
+            <th><a href="javascript:;" @onclick='()=>SortBy("release_date")'>Release Date</a></th>
+            <th><a href="javascript:;" @onclick='()=>SortBy("price")'>Price</a></th>
+            <th><a href="javascript:;" @onclick='()=>SortBy("likes")'>Likes</a></th>
+            <th></th>
+            @*<th>Cover</th>*@
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var book in books)
+        {
+            <tr>
+                <td>@book.Id</td>
+                <td>@book.Title</td>
+                <td>@book.Author</td>
+                <td>@book.ReleaseDate.ToShortDateString()</td>
+                <td>@book.Price.ToString("N2")€</td>
+                <td>@book.Likes</td>
+                <td><button type="button" class="btn btn-outline-dark shadow-none" @onclick='()=>book.Like()'>👍 Like</button></td>
+            </tr>
+        }
+    </tbody>
+</table>
+<nav>
+  <ul class="pagination">
+    <li class="page-item @(currentPage <= 1 ? "disabled" : "")">
+      <button class="page-link" @onclick="PrevPage" disabled="@(currentPage <= 1)">Prev</button>
+    </li>
+    <li class="page-item @(currentPage >= bookServices.GetTotalPages() ? "disabled" : "")">
+      <button class="page-link" @onclick="NextPage" disabled="@(currentPage >= bookServices.GetTotalPages())">Next</button>
+    </li>
+  </ul>
+</nav>
+<p>Showing page @currentPage / @bookServices.GetTotalPages()</p>

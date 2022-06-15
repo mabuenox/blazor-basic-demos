@@ -1,0 +1,23 @@
+﻿@page "/"
+@using BooksBlazorWasm.Shared.Model
+
+<PageTitle>Index</PageTitle>
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+<SurveyPrompt Title="How is Blazor working for you?" />
+
+<h2>Featured books</h2>
+<div class="row gy-4">
+    @foreach (var book in books)
+    {
+        <FeaturedBook Model=book></FeaturedBook>
+    }
+</div>
+
+@code {
+    private static BookServices bookServices = new BookServices();
+    private IEnumerable<Book> books = bookServices.GetBooks(1).Take(6);
+}
